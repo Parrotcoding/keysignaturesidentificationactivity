@@ -269,12 +269,18 @@
           const step = steps[i];
           const y = bottomStepY - step * stepSize;
           text.setAttribute("y", y);
-          text.setAttribute("dominant-baseline", "middle");
-          text.setAttribute("alignment-baseline", "middle");
           text.setAttribute("font-size", "64");
           text.setAttribute("fill", "#153a5a");
           text.setAttribute("font-family", "'Noto Music', 'Bravura', 'Maestro', 'Arial Unicode MS', serif");
           svg.appendChild(text);
+
+          const bbox = text.getBBox();
+          const centerY = bbox.y + bbox.height / 2;
+          const translateY = y - centerY;
+
+          if (Math.abs(translateY) > 0.01) {
+            text.setAttribute("transform", `translate(0 ${translateY})`);
+          }
         }
       }
 
